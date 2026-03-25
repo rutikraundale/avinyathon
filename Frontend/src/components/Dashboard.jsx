@@ -25,10 +25,10 @@ export default function Dashboard() {
           <button className="text-gray-400"><HelpCircle size={22} /></button>
           <div className="flex items-center gap-3 border-l pl-6 border-gray-200">
             <div className="text-right">
-              <p className="text-sm font-bold">Alex Rivera</p>
+              <p className="text-sm font-bold">JP</p>
               <p className="text-[10px] text-gray-400 uppercase font-medium">Project Admin</p>
             </div>
-            <img src="https://ui-avatars.com/api/?name=Alex+Rivera&background=FDBA74&color=fff" className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" alt="profile" />
+            <img src="https://ui-avatars.com/api/?name=J+P&background=FDBA74&color=fff" className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" alt="profile" />
           </div>
         </div>
       </header>
