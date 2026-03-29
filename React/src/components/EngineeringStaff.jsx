@@ -1,4 +1,5 @@
 import { UserPlus, Pencil, Trash2 } from 'lucide-react';
+import { useSite } from '../context/SiteContext';
 
 const engineers = [
   { 
@@ -22,6 +23,8 @@ const engineers = [
 ];
 
 export default function EngineeringStaff() {
+  const { selectedSite } = useSite();
+
   return (
     <div className="flex-1 ml-64 bg-slate-50 min-h-screen p-8">
       <div className="bg-white rounded-2xl border border-gray-50 shadow-sm overflow-hidden">
@@ -31,9 +34,14 @@ export default function EngineeringStaff() {
             <h3 className="text-2xl font-bold text-gray-800">Engineering Staff</h3>
             <p className="text-gray-400 text-sm mt-1">Monthly professional contractors and permanent leads.</p>
           </div>
-          <button className="bg-zinc-900 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold hover:bg-black transition-all">
-            <UserPlus size={18} /> Add New Engineer
-          </button>
+          <div className="flex gap-4">
+            <div className="flex items-center text-sm font-bold text-gray-600 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
+              {selectedSite ? (selectedSite.siteName || selectedSite.name || 'Unnamed Site') : 'All Sites'}
+            </div>
+            <button className="bg-zinc-900 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold hover:bg-black transition-all">
+              <UserPlus size={18} /> Add New Engineer
+            </button>
+          </div>
         </div>
 
         <table className="w-full text-left">

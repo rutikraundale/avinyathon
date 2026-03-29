@@ -1,17 +1,20 @@
-import {  Building2, Users, Wallet, CreditCard } from 'lucide-react';
+import { Building2, Users, Wallet, CreditCard } from 'lucide-react';
 import { UserButton, useUser } from "@clerk/clerk-react";
 import StatCard from './StatCard';
+import { useSite } from '../context/SiteContext';
 
 export default function Dashboard() {
   const { user } = useUser();
+  const { selectedSite } = useSite();
+
   return (
     <div className="flex-1 ml-64 bg-slate-50 min-h-screen p-8">
       {/* Header */}
       <header className="flex justify-between items-center mb-10">
         <div className="flex items-center gap-4 flex-1 max-w-xl">
-          <button className="flex items-center gap-2 text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-xl border border-gray-200">
-            Site Selector <span className="text-[10px]">▼</span>
-          </button>
+          <div className="flex items-center gap-2 text-sm font-medium text-orange-800 bg-orange-100 px-4 py-2 rounded-xl border border-orange-200">
+            Current Site: <span className="font-bold">{selectedSite ? (selectedSite.siteName || selectedSite.name || 'Unnamed Site') : 'All Sites'}</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-6">

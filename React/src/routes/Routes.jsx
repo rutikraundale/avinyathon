@@ -10,6 +10,7 @@ import Dashboard from "../components/Dashboard";
 import SiteManagement from "../components/SiteManagement";
 import LaborersDirectory from "../components/LaborersDirectory";
 import EngineeringStaff from "../components/EngineeringStaff";
+import CreateSite from "../pages/sites/CreateSite";
 
 const ProtectedLayout = () => {
   return (
@@ -69,6 +70,7 @@ function AppRoutes() {
         >
           <Route index element={<Dashboard />} />
           <Route path="sites" element={<SiteManagement />} />
+          <Route path="create-site" element={<CreateSite />} />
           <Route path="workers" element={<LaborersDirectory />} />
           <Route path="engineers" element={<EngineeringStaff />} />
         </Route>

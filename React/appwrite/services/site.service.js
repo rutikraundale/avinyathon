@@ -18,3 +18,15 @@ export const getSites = async () => {
     COLLECTIONS.SITES
   );
 };
+
+//  Ping Connection (Health Check)
+export const pingAppwrite = async () => {
+  try {
+    const response = await databases.listDocuments(DATABASE_ID, COLLECTIONS.SITES, []);
+    console.log("🟢 Appwrite Connection Successful! Received ping response:", response);
+    return true;
+  } catch (error) {
+    console.error("🔴 Appwrite Connection Failed! Ping error:", error.message);
+    return false;
+  }
+};
