@@ -1,4 +1,5 @@
 import { UserPlus, Pencil, Trash2, Users, HardHat } from 'lucide-react';
+import { useSite } from '../context/SiteContext';
 
 const laborers = [
   { id: 'BT-LAB-402', name: 'John Doe', role: 'Mason', wage: '$45.00', site: 'Downtown Plaza', status: 'ACTIVE', initial: 'JD' },
@@ -7,6 +8,8 @@ const laborers = [
 ];
 
 export default function LaborersDirectory() {
+  const { selectedSite } = useSite();
+
   return (
     <div className="flex-1 ml-64 bg-slate-50 min-h-screen p-8">
       <div className="bg-white rounded-2xl border border-gray-50 shadow-sm overflow-hidden">
@@ -21,9 +24,14 @@ export default function LaborersDirectory() {
               <HardHat size={16} /> Engineers
             </button>
           </div>
-          <button className="bg-orange-800 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold shadow-lg shadow-orange-100 hover:bg-orange-900 transition-all">
-            <UserPlus size={18} /> Add New Laborer
-          </button>
+          <div className="flex gap-4">
+            <div className="flex items-center text-sm font-bold text-gray-600 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
+              {selectedSite ? (selectedSite.siteName || selectedSite.name || 'Unnamed Site') : 'All Sites'}
+            </div>
+            <button className="bg-orange-800 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold shadow-lg shadow-orange-100 hover:bg-orange-900 transition-all">
+              <UserPlus size={18} /> Add New Laborer
+            </button>
+          </div>
         </div>
 
         <h3 className="text-2xl font-bold text-gray-800 mb-6">Laborers Directory</h3>
