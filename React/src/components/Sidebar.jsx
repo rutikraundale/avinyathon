@@ -1,12 +1,9 @@
-import { useState, useEffect } from 'react';
 import { LayoutDashboard, Building2, Users, HardHat, CalendarCheck, CreditCard, Package, FileText, BarChart3, Settings, LifeBuoy, Plus } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
-import { getSites, pingAppwrite } from '../../appwrite/services/site.service';
 
 export default function Sidebar() {
-  const { selectedSite, setSelectedSite } = useSite();
-  const [sites, setSites] = useState([]);
+  const { selectedSite, setSelectedSite, sites } = useSite();
   const navigate = useNavigate();
 
   const navItems = [
@@ -21,22 +18,7 @@ export default function Sidebar() {
     { icon: BarChart3, label: 'Reports', path: '/reports' },
   ];
 
-  const fetchSites = async () => {
-    try {
-      await pingAppwrite(); // Send a connection ping to the newly configured endpoint
-      const response = await getSites();
-      setSites(response.documents);
-      if (response.documents.length > 0 && !selectedSite) {
-        setSelectedSite(response.documents[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching sites:", error);
-    }
-  };
 
-  useEffect(() => {
-    fetchSites();
-  }, []);
 
   const handleCreateSiteNavigate = () => {
     navigate('/create-site');

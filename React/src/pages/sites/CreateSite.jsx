@@ -8,7 +8,7 @@ import { useSite } from '../../context/SiteContext';
 export default function CreateSite() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const { setSelectedSite } = useSite();
+  const { setSelectedSite, fetchSites } = useSite();
 
   const [formData, setFormData] = useState({
     siteName: '',
@@ -36,11 +36,12 @@ export default function CreateSite() {
         manager: formData.manager,
         siteId: formData.siteId,
         createdBy: user ? user.id : 'anonymous',
-        status: 'Active'
+        status: 'ACTIVE'
       };
 
       const newSite = await createSite(siteData);
       setSelectedSite(newSite);
+      await fetchSites();
       navigate('/');
     } catch (err) {
       console.error("Error creating site:", err);

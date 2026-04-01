@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Building2, Plus, Compass } from 'lucide-react';
-import { getSites, updateSite } from '../../appwrite/services/site.service';
+import { updateSite } from '../../appwrite/services/site.service';
+import { useSite } from '../context/SiteContext';
 
 export default function SiteManagement() {
-  const [sites, setSites] = useState([]);
+  const { sites, fetchSites } = useSite();
   const [loading, setLoading] = useState(true);
 
   const [editingSite, setEditingSite] = useState(null);
@@ -35,9 +36,8 @@ export default function SiteManagement() {
         manager: editFormData.manager,
         status: editFormData.status
       });
-      // Refresh sites
-      const response = await getSites();
-      setSites(response.documents);
+      // Refresh context 
+      await fetchSites();
       setEditingSite(null);
     } catch (error) {
       console.error("Error updating site:", error);
@@ -47,17 +47,11 @@ export default function SiteManagement() {
   };
 
   useEffect(() => {
-    const fetchSites = async () => {
-      try {
-        const response = await getSites();
-        setSites(response.documents);
-      } catch (error) {
-        console.error("Error fetching sites:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSites();
+    const initialize = async () => {
+      await fetchSites();
+      setLoading(false);
+    }
+    initialize();
   }, []);
 
   return (
