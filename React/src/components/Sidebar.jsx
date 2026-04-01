@@ -77,8 +77,12 @@ export default function Sidebar() {
               }`
             }
           >
-            <item.icon size={18} className={({ isActive }) => isActive ? 'text-orange-700' : ''} />
-            {item.label}
+            {({ isActive }) => (
+              <>
+                <item.icon size={18} className={isActive ? 'text-orange-700' : ''} />
+                {item.label}
+              </>
+            )}
           </NavLink>
         ))}
       </nav>

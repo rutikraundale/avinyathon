@@ -1,4 +1,4 @@
-import { Building2, Users, Wallet, CreditCard } from 'lucide-react';
+import { Building2, Users, Wallet, CreditCard, BarChart3, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import StatCard from './StatCard';
 import { useSite } from '../context/SiteContext';
@@ -106,5 +106,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-import { BarChart3, Plus as PlusIcon } from 'lucide-react';

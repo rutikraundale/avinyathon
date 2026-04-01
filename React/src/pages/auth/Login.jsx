@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ const Login = () => {
 
       {/* ── Right Auth Panel ── */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 relative">
-        
+
         <div className="w-full max-w-md">
           {/* header */}
           <div className="text-center mb-10">
@@ -85,22 +85,20 @@ const Login = () => {
           <div className="flex bg-slate-200/50 p-1.5 rounded-2xl mb-8">
             <button
               onClick={() => { setActiveTab("manager"); setError(""); }}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
-                activeTab === "manager"
+              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === "manager"
                   ? "bg-white text-orange-900 shadow-sm"
                   : "text-slate-500 hover:text-slate-700"
-              }`}
+                }`}
             >
               <HardHat size={18} className={activeTab === "manager" ? "text-orange-600" : ""} />
               Manager
             </button>
             <button
               onClick={() => { setActiveTab("admin"); setError(""); }}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
-                activeTab === "admin"
+              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === "admin"
                   ? "bg-white text-indigo-900 shadow-sm"
                   : "text-slate-500 hover:text-slate-700"
-              }`}
+                }`}
             >
               <ShieldCheck size={18} className={activeTab === "admin" ? "text-indigo-600" : ""} />
               Admin
@@ -154,11 +152,10 @@ const Login = () => {
             <button
               type="submit"
               disabled={pending}
-              className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-orange-950/10 transition-all transform active:scale-[0.98] ${
-                activeTab === "manager"
+              className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-orange-950/10 transition-all transform active:scale-[0.98] ${activeTab === "manager"
                   ? "bg-orange-800 hover:bg-orange-900"
                   : "bg-indigo-700 hover:bg-indigo-800"
-              } disabled:opacity-70 disabled:cursor-not-allowed`}
+                } disabled:opacity-70 disabled:cursor-not-allowed`}
             >
               {pending ? (
                 <Loader2 size={24} className="animate-spin" />
@@ -172,12 +169,12 @@ const Login = () => {
           </form>
 
           {activeTab === "manager" ? (
-             <p className="mt-8 text-center text-slate-500 text-sm">
-                Don't have a manager account?{" "}
-                <Link to="/signup" className="text-orange-800 font-bold hover:underline underline-offset-4">
-                  Create one now
-                </Link>
-              </p>
+            <p className="mt-8 text-center text-slate-500 text-sm">
+              Don't have a manager account?{" "}
+              <Link to="/signup" className="text-orange-800 font-bold hover:underline underline-offset-4">
+                Create one now
+              </Link>
+            </p>
           ) : (
             <div className="mt-8 p-4 rounded-xl bg-indigo-50/50 border border-indigo-100 flex items-center gap-3">
               <ShieldCheck size={16} className="text-indigo-600" />
@@ -193,3 +190,7 @@ const Login = () => {
 };
 
 export default Login;
+
+//Admin Login credentials
+//Email: admin@avinya.com
+//Password: Admin@123
