@@ -1,51 +1,54 @@
-import { account, ID } from "../config/appwriteConfig";
+import { Client, Account, ID } from 'appwrite';
 
-export const authService = {
-  // Signup for Manager
-  async signup({ email, password, name }) {
-    try {
-      const userAccount = await account.create(ID.unique(), email, password, name);
-      if (userAccount) {
-        // Automatically login after signup
-        return this.login({ email, password });
-      }
-      return userAccount;
-    } catch (error) {
-      console.error("AuthService :: signup :: error", error);
-      throw error;
-    }
-  },
+const client = new Client()
+    .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) 
+    .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
-  // Login for Manager
-  async login({ email, password }) {
-    try {
-      return await account.createEmailPasswordSession(email, password);
-    } catch (error) {
-      console.error("AuthService :: login :: error", error);
-      throw error;
-    }
-  },
+const account = new Account(client);
 
-  // Logout
-  async logout() {
-    try {
-      await account.deleteSessions();
-    } catch (error) {
-      console.error("AuthService :: logout :: error", error);
-      throw error;
-    }
-  },
+export const loginService = {
+    // Standard login function
+    async login(email, password) {
+        try {
+            // Create session
+            await account.createEmailPasswordSession(email, password);
+            
+            // Fetch the user's "backpack" (Preferences and Labels)
+            const user = await account.get();
+            
+            return {
+                success: true,
+                role: user.labels?.includes('admin') ? 'admin' : (user.prefs?.role || 'user'),
+                siteId: user.prefs?.siteId || null,
+                name: user.name,
+                user: user
+            };
+        } catch (error) {
+            console.error("Login failed", error);
+            throw new Error(error.message);
+        }
+    },
 
-  // Get current user
-  async getCurrentUser() {
-    try {
-      return await account.get();
-    } catch (error) {
-      // User not logged in or session expired
-      console.log("AuthService :: getCurrentUser :: No active session");
-      return null;
+    async getCurrentUser() {
+        try {
+            const user = await account.get();
+            return {
+                success: true,
+                role: user.labels?.includes('admin') ? 'admin' : (user.prefs?.role || 'user'),
+                siteId: user.prefs?.siteId || null,
+                name: user.name,
+                user: user
+            };
+        } catch (error) {
+            return null;
+        }
+    },
+
+    async logout() {
+        try {
+            await account.deleteSession('current');
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
     }
-  }
 };
-
-export default authService;

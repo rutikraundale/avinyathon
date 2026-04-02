@@ -1,10 +1,10 @@
-import { Building2, Users, Wallet, CreditCard, BarChart3, Plus } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { Building2, Users, Wallet, CreditCard, LogOut } from 'lucide-react';
+import { useAuth } from "../context/AuthContext";
 import StatCard from './StatCard';
 import { useSite } from '../context/SiteContext';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { selectedSite, sites } = useSite();
 
   return (
@@ -20,13 +20,25 @@ export default function Dashboard() {
 
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3 border-l pl-6 border-gray-200">
+            {user?.role === 'admin' && (
+              <button 
+                onClick={() => window.location.href = '/create-manager'}
+                className="bg-orange-800 text-white hover:bg-orange-700 text-xs font-bold py-2 px-4 rounded-lg shadow-sm mr-2 transition-colors flex items-center gap-1"
+              >
+                <Users size={14} /> New Manager
+              </button>
+            )}
             <div className="text-right">
-              <p className="text-sm font-black text-slate-900">{user?.name || 'Manager'}</p>
-              <p className="text-[10px] text-orange-600 uppercase font-black tracking-tighter">{user?.role || 'User'}</p>
+              <p className="text-sm font-bold">{user?.name || 'User'}</p>
+              <p className="text-[10px] text-gray-400 uppercase font-medium">{user?.role === 'admin' ? 'Project Admin' : 'Site Manager'}</p>
             </div>
-            <div className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 shadow-sm bg-white font-bold text-orange-800">
-              {user?.name?.charAt(0) || 'U'}
-            </div>
+            <button 
+              onClick={logout}
+              className="h-10 w-10 flex items-center justify-center rounded-full border-2 border-white shadow-sm bg-orange-100 text-orange-800 hover:bg-orange-200 transition-colors"
+              title="Logout"
+            >
+              <LogOut size={16} />
+            </button>
           </div>
         </div>
       </header>
@@ -41,7 +53,9 @@ export default function Dashboard() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <StatCard title="Total Sites" value={sites.length.toString()} subtitle="assigned to you" icon={Building2} colorClass="bg-blue-50" />
+        {user?.role === 'admin' && (
+          <StatCard title="Total Sites" value={sites?.length || sites || "5"} subtitle="active this month" trend="+1" icon={Building2} colorClass="bg-blue-50" />
+        )}
         <StatCard title="Total Workers" value="120" subtitle="Active Now" icon={Users} colorClass="bg-orange-50" />
         <StatCard title="Total Expenses" value="$45,200" subtitle="Updated recently" trend="+12%" icon={Wallet} colorClass="bg-emerald-50" />
         <StatCard title="Pending Payments" value="$8,500" badge="Urgent" icon={CreditCard} colorClass="bg-red-50" />

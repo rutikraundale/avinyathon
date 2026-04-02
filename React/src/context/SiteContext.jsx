@@ -1,22 +1,26 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useAuth } from "./AuthContext";
-import { getSites } from "../../appwrite/services/site.service";
+import { getSites, pingAppwrite } from "../../appwrite/services/site.service";
 
 const SiteContext = createContext();
 
 export const SiteProvider = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
   const [selectedSite, setSelectedSite] = useState(null);
   const [sites, setSites] = useState([]);
 
-  const role = user?.role || "manager";
-  const userId = user?.id || null;
+  // Derive role and userId from appwrite user object
+  const role = user?.role || "user";
+  const userId = user?.user?.$id ?? null;
+  const assignedSiteId = user?.siteId ?? null;
 
   const fetchSites = useCallback(async () => {
-    if (loading || !userId) return;
+    // Don't fetch until auth is loaded
+    if (loading || !isAuthenticated || !userId) return;
 
     try {
-      const response = await getSites(userId, role);
+      await pingAppwrite();
+      const response = await getSites(userId, role, assignedSiteId);
       setSites(response.documents || []);
       
       // If there are sites but none selected, select the first one
@@ -26,7 +30,7 @@ export const SiteProvider = ({ children }) => {
     } catch (error) {
       console.error("SiteContext :: fetchSites :: error", error);
     }
-  }, [loading, userId, role, selectedSite]);
+  }, [loading, userId, role, assignedSiteId]);
 
   useEffect(() => {
     if (userId) {

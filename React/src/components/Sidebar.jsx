@@ -8,9 +8,12 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  const isAdmin = user?.role === 'admin';
+
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
-    { icon: Building2, label: 'Sites', path: '/sites' },
+    // Only add 'Sites' nav item if user is an admin
+    ...(isAdmin ? [{ icon: Building2, label: 'Sites', path: '/sites' }] : []),
     { icon: Users, label: 'Workers', path: '/workers' },
     { icon: HardHat, label: 'Engineers', path: '/engineers' },
     { icon: CalendarCheck, label: 'Attendance', path: '/attendance' },
@@ -88,32 +91,16 @@ export default function Sidebar() {
       </nav>
 
       {/* Bottom Section */}
-      <div className="pt-4 border-t border-gray-100 space-y-3">
-        <button 
-          onClick={handleCreateSiteNavigate}
-          className="w-full bg-orange-800 text-white flex items-center justify-center gap-2 py-3 rounded-xl shadow-lg shadow-orange-950/10 font-bold hover:bg-orange-900 active:scale-[0.98] transition-all cursor-pointer"
-        >
-          <Plus size={20} /> New Site
-        </button>
-
-        {/* User Profile Area */}
-        <div className="flex items-center gap-3 p-2 bg-slate-50 rounded-2xl border border-slate-100">
-          <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-orange-800 shadow-sm">
-            <UserIcon size={20} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold text-slate-900 truncate">{user?.name || 'User'}</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{user?.role || 'Guest'}</p>
-          </div>
+      {isAdmin && (
+        <div className="pt-4 border-t border-gray-100 space-y-1">
           <button 
-            onClick={handleLogout}
-            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-            title="Logout"
+            onClick={handleCreateSiteNavigate}
+            className="w-full bg-gradient-to-r from-orange-700 to-orange-800 text-white flex items-center justify-center gap-2 py-3 rounded-xl shadow-lg shadow-orange-100 mb-4 font-semibold hover:shadow-orange-200 transition-all cursor-pointer"
           >
-            <LogOut size={18} />
+            <Plus size={20} /> New Site
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }
