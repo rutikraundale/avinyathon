@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     if (res.role !== expectedRole) {
       await loginService.logout();
       setUser(null);
-      throw new Error(`Unauthorized access: You are registered as a ${res.role}, not an ${expectedRole}.`);
+      throw new Error(`Unauthorized access!`);
     }
 
     setUser(res);
