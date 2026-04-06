@@ -63,7 +63,7 @@ const Payments = () => {
       workers.sort((a, b) => b.presentDays - a.presentDays);
 
       const engineers = (engineersRes.documents || []).map(e => {
-        const salary = e.salary || 0;
+        const salary = e.monthlySalary || e.salary || 0;
         const deductions = e.deductedAmt || 0;
         return {
           ...e,

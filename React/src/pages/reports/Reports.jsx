@@ -33,10 +33,10 @@ import { getInvoicesBySite } from "../../../appwrite/services/invoice.services";
 //material low value constant
 const LOW_STOCK_THRESHOLDS = {
     brick: 2000,          // Approx. 1 small trolley load
-    sand_valu: 100,       // 100 Cubic Feet (1 Brass)
-    gravel_gitti: 100,    // 100 Cubic Feet (1 Brass)
+    sand_valu: 10,       // 10 ton (1 Brass)
+    gravel_gitti: 10,    // 10 Cubic Feet (1 Brass)
     cement: 25,           // 25 Bags (Enough for minor masonry/plaster)
-    tmt_steel: 500,       // 500 kg (Half a tonne)
+    tmt_steel: 10,       // 500 kg (Half a tonne)
     bamboo_balli: 50,     // 50 pieces (Safety for local repairs)
     binding_wire: 5       // 5 kg (1 small coil)
 };
@@ -105,7 +105,7 @@ const SectionHeader = ({ icon: Icon, title, subtitle, iconBg = "bg-slate-100", i
 // ─── Main Component ────────────────────────────────────────────────────────────
 export default function Reports() {
   const { selectedSite } = useSite();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [finance, setFinance] = useState(null);

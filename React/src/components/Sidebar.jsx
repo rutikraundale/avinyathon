@@ -1,4 +1,4 @@
-import { LayoutDashboard, Building2, Users, HardHat, CalendarCheck, CreditCard, Package, FileText, BarChart3, Settings, LifeBuoy, Plus, LogOut, User as UserIcon } from 'lucide-react';
+import { LayoutDashboard, Building2, Users, HardHat, CalendarCheck, CreditCard, Package, FileText, BarChart3, Settings, LifeBuoy, Plus, LogOut, User as UserIcon, UserCog } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
 import { useAuth } from '../context/AuthContext';
@@ -14,6 +14,7 @@ export default function Sidebar() {
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
     // Only add 'Sites' nav item if user is an admin
     ...(isAdmin ? [{ icon: Building2, label: 'Sites', path: '/sites' }] : []),
+    ...(isAdmin ? [{ icon: UserCog, label: 'Managers', path: '/create-manager' }] : []),
     { icon: Users, label: 'Workers', path: '/workers' },
     { icon: HardHat, label: 'Engineers', path: '/engineers' },
     { icon: CalendarCheck, label: 'Attendance', path: '/attendance' },
