@@ -176,7 +176,7 @@ const LoginPage = () => {
           <div className="mt-auto pt-8 flex gap-6 text-[10px] text-[#8c7265] uppercase tracking-widest font-bold">
             <a href="#" className="hover:text-[#9e4300]">Privacy Protocol</a>
             <a href="#" className="hover:text-[#9e4300]">Terms of Site</a>
-            <span>© 2024 Samarth Dev.</span>
+            <span>© 2026 Samarth Dev.</span>
           </div>
         </section>
       </main>
